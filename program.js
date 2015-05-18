@@ -39,14 +39,23 @@
 // });
 
 // #6
-var helperDirectories = require('./helper-function');
+// var helperDirectories = require('./helper-function');
+//
+// helperDirectories(process.argv[2], process.argv[3], function(err, results){
+// 	if (err) {
+// 		console.log('Magical error has occured:', err);
+// 	}
+//
+// 	results.forEach(function(item) {
+// 		console.log(item);
+// 	})
+// });
 
-helperDirectories(process.argv[2], process.argv[3], function(err, results){
-	if (err) {
-		console.log('Magical error has occured:', err);
-	}
+// #7
+var http = require('http');
 
-	results.forEach(function(item) {
-		console.log(item);
+http.get(process.argv[2], function(response) {
+	response.on("data", function(data) {
+		console.log(data.toString());
 	})
-});
+})
