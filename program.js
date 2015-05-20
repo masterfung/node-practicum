@@ -121,11 +121,26 @@
 
 
 // #11
-var http = require('http');
-var fs = require('fs');
+// var http = require('http');
+// var fs = require('fs');
+//
+// var server = http.createServer(function(request, response) {
+// 	var readStream = fs.createReadStream(process.argv[3]);
+// 	readStream.pipe(response);
+// });
+// server.listen(process.argv[2]);
+
+
+// #12
+var http = require('http')
+    mapper = require('through2-map');
 
 var server = http.createServer(function(request, response) {
-	var readStream = fs.createReadStream(process.argv[3]);
-	readStream.pipe(response);
+	if (request.method !== 'POST') {
+		return response.end('Please use only POST requests.\n')
+	}
+	request.pipe(mapper(function (chunk) {
+      return chunk.toString().toUpperCase()
+    })).pipe(response)
 });
 server.listen(process.argv[2]);
