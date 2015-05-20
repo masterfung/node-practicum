@@ -111,10 +111,21 @@
 
 
 // #10
-var net = require('net');
-var server = net.createServer(function(socket) {
-	var strftime = require('strftime');
-	socket.write(strftime('%Y-%m-%d %H:%M', new Date())+'\n')
-	socket.end()
-})
+// var net = require('net');
+// var server = net.createServer(function(socket) {
+// 	var strftime = require('strftime');
+// 	socket.write(strftime('%Y-%m-%d %H:%M', new Date())+'\n')
+// 	socket.end()
+// })
+// server.listen(process.argv[2]);
+
+
+// #11
+var http = require('http');
+var fs = require('fs');
+
+var server = http.createServer(function(request, response) {
+	var readStream = fs.createReadStream(process.argv[3]);
+	readStream.pipe(response);
+});
 server.listen(process.argv[2]);
