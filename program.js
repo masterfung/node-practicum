@@ -132,15 +132,49 @@
 
 
 // #12
-var http = require('http')
-    mapper = require('through2-map');
+// var http = require('http')
+//     mapper = require('through2-map');
+//
+// var server = http.createServer(function(request, response) {
+// 	if (request.method !== 'POST') {
+// 		return response.end('Please use only POST requests.\n')
+// 	}
+// 	request.pipe(mapper(function (chunk) {
+//       return chunk.toString().toUpperCase()
+//     })).pipe(response)
+// });
+// server.listen(process.argv[2]);
 
-var server = http.createServer(function(request, response) {
-	if (request.method !== 'POST') {
-		return response.end('Please use only POST requests.\n')
+
+// #13
+var http = require('http');
+var url = require('url');
+var moment = require('moment');
+
+var server = http.createServer(function(req, res) {
+	res.writeHead(200, {"Content-type": "application/json"});
+	var urlComponent = url.parse(req.url, true);
+	var currentTime = new moment(urlComponent.query.iso);
+
+	if (req.method !== 'GET') {
+		return response.end('Please use only GET requests!\n')
 	}
-	request.pipe(mapper(function (chunk) {
-      return chunk.toString().toUpperCase()
-    })).pipe(response)
+
+	if ('/api/parsetime' === urlComponent.pathname) {
+		res.write(JSON.stringify({
+			'hour': parseInt(currentTime.format('H'), null),
+			'minute': parseInt(currentTime.format('mm'), null),
+			'second': parseInt(currentTime.format('ss'), null)
+		}));
+		res.end();
+	} else if ('/api/unixtime' === urlComponent.pathname) {
+		res.write(JSON.stringify({
+			'unixtime': currentTime._d.getTime()
+		}));
+		res.end();
+	} else {
+		res.end();
+	}
+
 });
 server.listen(process.argv[2]);
