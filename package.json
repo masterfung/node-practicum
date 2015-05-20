@@ -22,6 +22,7 @@
   "homepage": "https://github.com/masterfung/node-practicum",
   "dependencies": {
     "bl": "^0.9.4",
-    "concat-stream": "^1.4.8"
+    "concat-stream": "^1.4.8",
+    "strftime": "^0.9.0"
   }
 }
