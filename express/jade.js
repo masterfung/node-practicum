@@ -5,7 +5,6 @@ var jade = require('jade');
 var app = express();
 
 app.set('view engine', 'jade');
-
 app.set('views', process.argv[3]);
 
 
