@@ -15,8 +15,8 @@ server.route({
   path: '/',
   config: {
     handler: function(req, res) {
-      var streamingObject = Fs.createReadStream(Path.join(__dirname, 'input.txt'))
-      res(streamingObject.pipe(Rot13()))
+      var streamingObject = Fs.createReadStream(Path.join(__dirname, 'input.txt'));
+      res(streamingObject.pipe(Rot13()));
     }
   }
 })
