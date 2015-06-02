@@ -11,10 +11,10 @@ server.connection({
 server.route({
   path: '/chickens/{breed}',
   method: "GET",
+  handler: function(req, res) {
+    res('Your request for chicken info is: ' + req.params.breed);
+  },
   config: {
-    handler: function(req, res) {
-      res('Your request for chicken info is: ' + req.params.breed);
-    },
     validate: {
         params: {
           breed: Joi.string().required()
